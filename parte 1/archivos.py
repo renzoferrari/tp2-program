@@ -1,8 +1,14 @@
-def cargar_desde_csv():
+from datetime import date
+
+def cargar_desde_csv(nombre_archivo: str) -> list:
+    """
+    Lee un archivo CSV y retorna una matriz con los datos.
+    Recibe el nombre del archivo como parametro.
+    """
     matriz = []
-    archivo = open("notas.csv", "r")
-    linea = archivo.readline()  # saltamos el encabezado
-    linea = archivo.readline()  # primera línea de datos
+    archivo = open(nombre_archivo, "r")
+    archivo.readline()  
+    linea = archivo.readline()
     while linea != "":
         cadena_actual = ""
         fila = []
@@ -19,13 +25,15 @@ def cargar_desde_csv():
     archivo.close()
     return matriz
 
-from datetime import date
-
-def guardar_csv(matriz):
+def guardar_csv(matriz: list, cabecera: str) -> str:
+    """
+    Guarda una matriz en un archivo CSV con la fecha actual como nombre.
+    Recibe la cabecera como parametro para ser reutilizable.
+    """
     fecha = date.today()
     nombre_archivo = str(fecha.day) + "-" + str(fecha.month) + "-" + str(fecha.year) + ".csv"
     archivo = open(nombre_archivo, "w")
-    archivo.write("trimestre1,trimestre2,trimestre3\n")
+    archivo.write(cabecera + "\n")
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             archivo.write(str(matriz[i][j]))

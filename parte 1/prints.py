@@ -1,32 +1,35 @@
-def mostrar_matriz(matriz):
+def mostrar_matriz(matriz: list) -> None:
+    """
+    Muestra la matriz con las notas de cada alumno.
+    """
     print("=== NOTAS CARGADAS ===")
     for i in range(len(matriz)):
         print("Alumno " + str(i+1) + ": T1=" + str(matriz[i][0]) + " T2=" + str(matriz[i][1]) + " T3=" + str(matriz[i][2]))
 
-def mostrar_desaprobados(matriz, desaprobados):
-    if len(desaprobados) == 0:
-        print("No hay alumnos desaprobados")
+def mostrar_alumnos(lista: list, mensaje_vacio: str, titulo: str) -> None:
+    """
+    Muestra los alumnos de la lista recibida.
+    Recibe el mensaje en caso de lista vacia y el titulo como parametro.
+    """
+    if len(lista) == 0:
+        print(mensaje_vacio)
     else:
-        print("=== ALUMNOS DESAPROBADOS ===")
-        for i in range(len(desaprobados)):
-            indice = desaprobados[i]
-            print("Alumno " + str(indice+1))
+        print(titulo)
+        for i in range(len(lista)):
+            print("Alumno " + str(lista[i] + 1))
 
-def mostrar_aplazados(matriz, aplazados):
-    if len(aplazados) == 0:
-        print("No hay alumnos aplazados")
-    else:
-        print("=== ALUMNOS APLAZADOS ===")
-        for i in range(len(aplazados)):
-            indice = aplazados[i]
-            print("Alumno " + str(indice+1))
-
-def mostrar_porcentajes(porcentaje_aprobados, porcentaje_desaprobados):
+def mostrar_porcentajes(porcentaje_aprobados: float, porcentaje_desaprobados: float) -> None:
+    """
+    Muestra el porcentaje de aprobados y desaprobados.
+    """
     print("=== PORCENTAJE DE APROBADOS Y DESAPROBADOS ===")
     print("Aprobados: " + str(porcentaje_aprobados) + "%")
     print("Desaprobados: " + str(porcentaje_desaprobados) + "%")
 
-def mostrar_mejor_trimestre(trimestres_ganadores, mayor):
+def mostrar_mejor_trimestre(trimestres_ganadores: list, mayor: float) -> None:
+    """
+    Muestra el trimestre con mejor promedio.
+    """
     print("=== TRIMESTRE CON MEJOR PROMEDIO ===")
     print("Promedio: " + str(mayor))
     for i in range(len(trimestres_ganadores)):

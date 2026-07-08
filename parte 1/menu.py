@@ -3,7 +3,10 @@ from inputs import *
 from archivos import *
 from prints import *
 
-def iniciar_menu():
+def iniciar_menu() -> None:
+    """
+    Inicia el menu principal del programa.
+    """
     matriz = []
     datos_cargados = False
     carga_manual = False
@@ -25,40 +28,43 @@ def iniciar_menu():
                 print("2. Cargar desde CSV")
                 sub_opcion = pedir_opcion("Seleccione: ", 1, 2)
                 if sub_opcion == 1:
-                    matriz = cargar_notas_manual()
+                    matriz = cargar_notas_manual(7)
                     carga_manual = True
                 else:
-                    matriz = cargar_desde_csv()
-                
+                    matriz = cargar_desde_csv("notas.csv")
                 datos_cargados = True
                 mostrar_matriz(matriz)
                 print("Datos cargados correctamente!")
             case 2:
-                 if datos_cargados:
-                    desaprobados = obtener_desaprobados(matriz)
-                    mostrar_desaprobados(matriz, desaprobados)
+                if datos_cargados:
+                    desaprobados = obtener_alumnos_con_nota_menor(matriz, 7)
+                    mostrar_alumnos(desaprobados, "No hay alumnos desaprobados", "=== ALUMNOS DESAPROBADOS ===")
+                else:
+                    print("Primero debe cargar los datos")
             case 3:
                 if datos_cargados:
-                    aplazados = obtener_aplazados(matriz)
-                    mostrar_aplazados(matriz, aplazados)
+                    aplazados = obtener_alumnos_con_nota_menor(matriz, 4)
+                    mostrar_alumnos(aplazados, "No hay alumnos con aplazos", "=== ALUMNOS CON APLAZOS ===")
                 else:
                     print("Primero debe cargar los datos")
             case 4:
                 if datos_cargados:
-                    porcentaje_aprobados, porcentaje_desaprobados = calcular_porcentaje_aprobados(matriz)
+                    porcentaje_aprobados = calcular_porcentaje_aprobados(matriz)
+                    porcentaje_desaprobados = calcular_porcentaje_desaprobados(matriz)
                     mostrar_porcentajes(porcentaje_aprobados, porcentaje_desaprobados)
                 else:
                     print("Primero debe cargar los datos")
             case 5:
-                  if datos_cargados:
-                      promedios = calcular_promedios_trimestres(matriz)
-                      trimestres_ganadores, mayor = obtener_mejor_trimestre(promedios)
-                      mostrar_mejor_trimestre(trimestres_ganadores, mayor)
-                  else:
-                      print("Primero debe cargar los datos")
+                if datos_cargados:
+                    promedios = calcular_promedios_trimestres(matriz)
+                    mayor = obtener_mayor_promedio(promedios)
+                    trimestres_ganadores = obtener_trimestres_ganadores(promedios, mayor)
+                    mostrar_mejor_trimestre(trimestres_ganadores, mayor)
+                else:
+                    print("Primero debe cargar los datos")
             case 6:
                 if carga_manual:
-                    nombre = guardar_csv(matriz)
+                    nombre = guardar_csv(matriz, "trimestre1,trimestre2,trimestre3")
                     print("Archivo guardado como: " + nombre)
                 print("Saliendo...")
                 break
